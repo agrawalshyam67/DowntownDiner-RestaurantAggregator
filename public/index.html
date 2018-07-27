@@ -1,0 +1,208 @@
+<html>
+
+    <head>
+           
+            <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+            <link rel="stylesheet" type="text/css" href="style.css">
+        <title>Rest Hunter</title>
+        <script>
+        
+        window.onload = function()
+        {
+
+            var myArr;
+            // Adding Event Listener to Buttons (Search, all Dishes)
+            document.querySelector('form').addEventListener('submit',searchString);   
+            document.getElementById('allDishes').addEventListener('click', getAllDishes);
+            
+            function getAllDishes()
+                {
+                    //AJAX Method For fetching all the dishes From The Database
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function()
+                    { if(this.readyState == 4 && this.status == 200)
+                        {
+                        myArr = JSON.parse(this.responseText);                            
+                        myFunc(myArr); // Sending the Received data to a function to process further
+                        }
+                    }
+
+                    xhttp.open('GET', '/allDishes', true);
+                    // xhttp.setRequestHeader('Content-Type', 'application/json');
+                    xhttp.send();  
+
+
+                }
+                
+
+            function searchString(e)
+            {
+                //AJAX Method For fetching dishes From The Database based on keyword
+                e.preventDefault();
+
+                var input1 = document.getElementById('data1').value;
+                console.log(input1);
+                var newEntry = { 'name': input1 }; 
+                console.log(JSON.stringify(newEntry)); 
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function()
+                { if(this.readyState == 4 && this.status == 200)
+                    {
+                        myArr = JSON.parse(this.responseText);                            
+                        myFunc(myArr);  // Sending the Received data to a function to process further
+                    }
+                }
+
+                xhttp.open('POST', '/search', true);
+                xhttp.setRequestHeader('Content-Type', 'application/json');
+                xhttp.send(JSON.stringify(newEntry));              
+
+            }      
+
+
+            function myFunc(arr)
+                    {   
+                        if(arr != '')
+                         {
+                            document.getElementById('demo').innerHTML = ""; 
+                            for(var i = 0;i < arr.length; i++) // Extracting & displaying Json Element
+                                {
+                                    var div = document.createElement('div');
+                                    div.classList.add("items");
+                                    div.id = arr[i]._id;                   
+                                    var p = document.createElement('h3');
+                                    var p2 = document.createElement('h4');
+                                    var p3 = document.createElement('p');             
+                            
+                                    p.innerHTML = arr[i].itemName;
+                                    if(arr[i].itemDesc == undefined)
+                                     {
+                                        p2.innerHTML = "Desc not available" ;
+                                     }
+                                    else
+                                     {
+                                        p2.innerHTML = arr[i].itemDesc;
+                                     }                            
+                                    p3.innerHTML = arr[i].price;
+                                    div.appendChild(p);                           
+                                    div.appendChild(p2);
+                                    div.appendChild(p3);    
+                                    document.getElementById('demo').appendChild(div);                            
+                                    div.onclick = function(){btnfun(this.id, arr)};  // if dish is clicked it should show the Restaurant Details                          
+                                }
+                            
+                            function btnfun(ida, arr) // Showing Restauarnt details if user clicks a dish
+                                {                               
+                                    document.getElementById('demo').innerHTML = '';
+                                    for(var i = 0; i < arr.length; i++)
+                                        {   
+                                            if(arr[i]._id == ida)
+                                                {
+                                                    console.log(arr[i].itemName);
+                                                    var div = document.createElement('div');
+                                                    var list = document.createElement('ul');
+                                                    var p = document.createElement('h2');
+                                                    var p2 = document.createElement('h4');
+                                                    var p3 = document.createElement('h4');
+                                                    var p4 = document.createElement('h4');
+                                                    var p5 = document.createElement('h1');
+                                                    var p6 = document.createElement('h4');
+                                            
+                                                    p5.innerHTML = arr[i].restName;
+                                                    p.innerHTML = arr[i].itemName;
+                                            
+                                                    if(arr[i].itemDesc == undefined)
+                                                        {
+                                                            p2.innerHTML = "Desc not available";
+                                                        }
+                                                    else{
+                                                            p2.innerHTML = arr[i].itemDesc;
+                                                        }
+                                            
+                                                    p3.innerHTML = arr[i].price;
+                                                    p4.innerHTML = arr[i].restDetails;
+                                                    p6.innerHTML = arr[i].timeStamp;
+                                                    div.appendChild(p5);
+                                                    div.appendChild(p);
+                                                    div.appendChild(p2);
+                                                    div.appendChild(p3);
+                                                    div.appendChild(p4);
+                                                    div.appendChild(p6);                                            
+                                                    document.getElementById('demo').appendChild(div);
+
+                                                }
+                                        }                       
+
+                                }
+
+                        }
+                        else
+                        {
+                            document.getElementById('demo').innerHTML = "The Dish/Ingredients You are Searching for is not Available at this moment. Please Enter the Exact Keywords";
+                        }                        
+
+                    }
+            
+
+
+        }        
+        
+        
+        </script>
+    </head>
+
+    <body>
+
+            <nav class="navbar navbar-default navbar-fixed-top">
+                    <div class="container">
+                      <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                          <span class="sr-only">Toggle navigation</span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand"  href="javascript:history.go(0)">DownTown Diner</i> <i class="fa fa-cutlery" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                   </nav>
+                  
+
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-12">
+                        
+                            <h1>Welcome to DownTown Diner</h1>
+
+                            <form action="/search" method="POST">
+                                
+                                <div id='frm'>
+                                    <input type="text" name="data1" id="data1" placeholder="Search Dishes From 3 Restaurants" size="40" required>
+                                    <input type="submit" value="Search"  class=" btn btn-default btn-lg" >
+                                    <input type="button" value="All Available Dishes" class="btn btn-default btn-lg" id="allDishes">
+                                </div>
+                    
+                    
+                            </form>
+                    
+
+                            <div id="demo">
+
+                            </div>
+
+                            
+                    </div>
+            </div>
+            
+        </div>
+        
+
+    </body>
+
+
+</html>
