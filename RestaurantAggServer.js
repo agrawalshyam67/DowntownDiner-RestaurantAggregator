@@ -28,7 +28,7 @@ app.listen(4000, function(){
 });
 
 //Connect to the database MongoDB
-mongoose.connect('mongodb://test:test123@ds261470.mlab.com:61470/shypaldb', function()
+mongoose.connect('mongodb://UserID:Password@ds261470.mlab.com:61470/shypaldb', function()
     { console.log('Connected To Database'); });
 
 
