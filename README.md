@@ -17,18 +17,22 @@ dishes and opening hours of restaurants by clicking any of the
 dishes.
 
 The Manual Provides Information About How to Use the Software.
+
 Step 1
  Download and Install NodeJS - https://nodejs.org/en/
  Extract the Zip File Provided
  Open the folder in an Editor – For Example. Visual Studio Code
+
 Step 2
  Install the Packages Required for the Project from the Terminal or Cmd using the following
 query: npm install request cheerio mongoose express body-parser
- Run the RestaurantAgg.js File using query: node RestaurantAgg
+ Run the RestaurantAgg.js File using query: node RestaurantAggServer
+
 Step 3
  Open a Browser e.g. Chrome.
  Go to the Local Address - http://localhost:4000/index.html
  Now you will be able to use the Software
+
 Additional
  Inform yourself about the Restaurants Scrapped and their Respective Menus
 Restaurant 1: https://tillmanns-chemnitz.de/speisekarte
