@@ -1,0 +1,27 @@
+h1, #frm{
+    padding-top: 50px;
+    text-align: center;
+   
+}
+
+
+#frm{
+    padding: 50px;
+}
+
+.items{
+    border: 1px solid black;
+    text-align: center;
+}
+
+.items:hover{
+    background-color: lightgray;
+}
+
+div {
+    text-align: center;
+}
+
+#about{
+    padding-top: 300px;
+}
