@@ -38,3 +38,5 @@ Additional
 Restaurant 1: https://tillmanns-chemnitz.de/speisekarte
 Restaurant 2: https://www.schroedingers.de/speisekarte-schroedingers
 Restaurant 3: http://www.malula-chemnitz.de/
+
+Self-Evaluation : MVC was not followed!
